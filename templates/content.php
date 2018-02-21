@@ -18,6 +18,9 @@
         if(isset($_GET['edytuj_chorobe'])){
             require_once('edytuj_chorobe.php');
         }
+        if(isset($_GET['edytuj_diete'])){
+            require_once('edytuj_diete.php');
+        }
 
     ?>
 </div>

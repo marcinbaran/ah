@@ -201,6 +201,22 @@ class Main{
         $this->db->run('MATCH(n:Rodzaj) WHERE ID(n)= '.$id.' SET n.opis="'.$data['opis'].'"');
     }
 
+    public function print_choroba_option(){
+        $result = $this->db->run('MATCH (n:Choroba) RETURN n ORDER BY n.nazwa');
+        $rows = $result->records();
+        foreach($rows as $row){
+            echo '<option>'.$row->values()[0]->values()['nazwa'].'</option>';
+        }
+    }
+
+    public function print_dieta_option(){
+        $result = $this->db->run('MATCH (n:Rodzaj) RETURN n ORDER BY n.nazwa');
+        $rows = $result->records();
+        foreach($rows as $row){
+            echo '<option>'.$row->values()[0]->values()['nazwa'].'</option>';
+        }
+    }
+
 
 
 

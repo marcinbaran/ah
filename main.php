@@ -160,6 +160,11 @@ class Main{
         return $result->records();
     }
 
+    public function informacje_o_diecie2($nazwa){
+        $result = $this->db->run('MATCH (n:Rodzaj) where n.nazwa="'.$nazwa.'" RETURN n');
+        return $result->records();
+    }
+
     public function dodaj_produkt_do_diety($id_diety, $data){
         if($data['zalecenia'] == 'Zalecany'){
             $zalecenia = 'Zalecany';
@@ -217,6 +222,31 @@ class Main{
         }
     }
 
+    public function print_produkty($nazwa, $grupa){
+        $tablica['zalecane'] = '';
+        $tablica['dozwolony_w_umiarkowanych_ilościach'] = '';
+        $tablica['niewskazany'] = '';
+        $result = $this->db->run('MATCH (n:Rodzaj) WHERE n.nazwa="'.$nazwa.'"
+                                        MATCH (p:Produkt)-[r]-(n)
+                                        MATCH (g:Grupa_produktów)-[:Zawiera]-(p)
+                                        RETURN p,r,g
+        ');
+        $rows = $result->records();
+        foreach($rows as $row){
+            if($row->values()[2]->values()['nazwa'] == $grupa){
+                if($row->values()[1]->type() == 'Zalecany'){
+                    $tablica['zalecane'] = $tablica['zalecane'].$row->values()[0]->values()['nazwa'].', ';
+                }
+                if($row->values()[1]->type() == 'Dozwolony_w_umiarkowanych_ilościach'){
+                    $tablica['dozwolony_w_umiarkowanych_ilościach'] = $tablica['dozwolony_w_umiarkowanych_ilościach'].$row->values()[0]->values()['nazwa'].', ';
+                }
+                if($row->values()[1]->type() == 'Niewskazany'){
+                    $tablica['niewskazany'] = $tablica['niewskazany'].$row->values()[0]->values()['nazwa'].', ';
+                }
+            }
+        }
+        return $tablica;
+    }
 
 
 

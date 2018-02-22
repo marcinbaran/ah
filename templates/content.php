@@ -24,9 +24,5 @@
         if(isset($_GET['wyswietl_diete'])){
             require_once('wyswietl_diete.php');
         }
-        if(isset($_GET['wyswietl_chorobe'])){
-            require_once('wyswietl_chorobe.php');
-        }
-
     ?>
 </div>

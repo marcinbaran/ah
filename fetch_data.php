@@ -17,5 +17,15 @@
 
     }
 
+    if(isset($_POST['get_option2'])){
+	    $query = 'MATCH (d:Rodzaj)-[:Zalecana]->(n:Choroba{nazwa:"'.$_POST['get_option2'].'"}) RETURN d';
+        $result = $db->run($query);
+        $rows = $result->records();
+        foreach ($rows as $row) {
+            echo '<option>'.$row->values()[0]->value('nazwa').'</option>';
+        }
+
+    }
+
 
 

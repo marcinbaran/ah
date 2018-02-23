@@ -248,6 +248,15 @@ class Main{
         return $tablica;
     }
 
+    public function print_szukaj($dane){
+        $temp_choroba = $this->db->run('MATCH (choroba:Choroba{nazwa:"'.$dane['choroba'].'"})<-[:Zalecana]-(dieta:Rodzaj)
+                                                RETURN dieta
+        ');
+        $temp_nazwadiety = $temp_choroba->records()['0']->values()[0]->values()['nazwa'];
+        $temp_produkt = $this->db->run('MATCH (produkt:Produkt{nazwa:"'.$dane['produkt'].'"})-[r]->(dieta:Rodzaj{nazwa:"'.$temp_nazwadiety.'"}) RETURN produkt,r,dieta');
+        return $temp_produkt->records();
+    }
+
 
 
 

@@ -32,6 +32,7 @@
                             <li><a href="?diety">Diety</a></li>
                         </ul>
                     </li>
+                    <li class="<?php if(isset($_GET['szukaj'])){echo 'active';}?>"><a href="?szukaj">Szukaj</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <form class="navbar-form navbar-left" action="" method="GET">
